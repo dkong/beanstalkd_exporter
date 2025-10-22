@@ -172,8 +172,8 @@ func (e *Exporter) scrape(conn *beanstalk.Conn) []prometheus.Collector {
 	}
 	e.scrapeCountMetric.WithLabelValues("success").Inc()
 	for key, value := range stats {
-		// ignore these stats
-		if key == "hostname" || key == "id" || key == "pid" {
+		// ignore these stats (string fields that shouldn't be parsed as numbers)
+		if key == "hostname" || key == "id" || key == "pid" || key == "version" || key == "draining" || key == "os" || key == "platform" {
 			continue
 		}
 
